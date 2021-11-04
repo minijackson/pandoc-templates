@@ -172,7 +172,7 @@ $if(theme)$
 \usetheme[$for(themeoptions)$$themeoptions$$sep$,$endfor$]{$theme$}
 $endif$
 $if(colortheme)$
-\usecolortheme{$colortheme$}
+\usecolortheme[$for(colorthemeoptions)$$colorthemeoptions$$sep$,$endfor$]{$colortheme$}
 $endif$
 $if(fonttheme)$
 \usefonttheme{$fonttheme$}
@@ -376,6 +376,83 @@ $endfor$
 \let\LanguageShortHands\languageshorthands
 \def\languageshorthands#1{}
 $endif$
+$if(beamer)$
+% Make toc brighter
+\setbeamercolor{section in toc}{
+  use=normal text,
+  fg=normal text.fg
+}
+\setbeamercolor{subsection in toc}{
+  use=normal text,
+  fg=normal text.fg
+}
+% Add background to blocks
+\setbeamercolor*{block title}{
+  bg=normal text.bg!80!normal text.fg,
+}
+\setbeamercolor*{block body}{
+  bg=normal text.bg!90!normal text.fg,
+}
+$else$
+\definecolor{normal text.fg}{named}{black}
+\definecolor{normal text.bg}{named}{white}
+% From Owl
+\definecolor{OwlRed}{RGB}{    255,  92, 168}
+\definecolor{OwlGreen}{RGB}{   90, 168,   0}
+\definecolor{OwlBlue}{RGB}{     0, 152, 233}
+\definecolor{OwlYellow}{RGB}{ 242, 147,  24}
+\colorlet{OwlViolet}{OwlRed!50!OwlBlue}
+\colorlet{OwlBrown}{OwlRed!50!OwlGreen}
+\colorlet{OwlOrange}{OwlRed!50!OwlYellow}
+\colorlet{OwlCyan}{OwlGreen!50!OwlBlue}
+\colorlet{red}{OwlRed}
+\colorlet{green}{OwlGreen}
+\colorlet{blue}{OwlBlue}
+\colorlet{yellow}{OwlYellow}
+\colorlet{violet}{OwlViolet}
+\colorlet{brown}{OwlBrown}
+\colorlet{orange}{OwlOrange}
+\colorlet{cyan}{OwlCyan}
+$endif$
+
+\usepackage[outputdir=build]{minted}
+\usemintedstyle{$if(minted.style)$$minted.style$$else$$if(beamer)$inkpot$else$perldoc$endif$$endif$}
+\setminted{tabsize=4,breaklines,numbersep=3mm,linenos,highlightcolor=violet!40!normal text.bg}
+
+\setmonofont{Fira Code}[
+  Scale=0.87096774193548387, % 459/527
+  ItalicFont={Latin Modern Mono 10 Italic},
+  Contextuals=Alternate,
+  StylisticSet={6,8},
+]
+
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+\renewcommand{\theFancyVerbLine}{\ttfamily\scriptsize\textcolor{normal text.fg!60!normal text.bg}{\arabic{FancyVerbLine}}}
+
+\BeforeBeginEnvironment{minted}{\begin{tcolorbox}[
+  breakable,
+  tile,
+  enhanced,
+  left=6mm,
+  colbacktitle=normal text.bg!80!normal text.fg,
+  coltitle=normal text.fg,
+  coltext=normal text.fg,
+  fonttitle=\ttfamily\bfseries,
+  colback=normal text.bg!90!normal text.fg,
+  overlay={
+    \begin{tcbclipinterior}
+      \fill[normal text.bg!85!normal text.fg] (frame.south west) rectangle ([xshift=5mm]frame.north west);
+    \end{tcbclipinterior}
+  }
+]}
+\AfterEndEnvironment{minted}{\end{tcolorbox}}
+
+\makeatletter
+\def\verbatim@nolig@list{}
+\makeatother
+
 $for(header-includes)$
 $header-includes$
 $endfor$
