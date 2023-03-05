@@ -415,10 +415,13 @@ $endif$
 
 \renewcommand{\theFancyVerbLine}{\ttfamily\scriptsize\textcolor{normal text.fg!60!normal text.bg}{\arabic{FancyVerbLine}}}
 
+% TODO: redefine quote environment
+
 \BeforeBeginEnvironment{minted}{\begin{tcolorbox}[
   breakable,
   tile,
   enhanced,
+  frame hidden,
   left=6mm,
   colbacktitle=normal text.bg!80!normal text.fg,
   coltitle=normal text.fg,
