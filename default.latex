@@ -377,22 +377,6 @@ $endfor$
 \def\languageshorthands#1{}
 $endif$
 $if(beamer)$
-% Make toc brighter
-\setbeamercolor{section in toc}{
-  use=normal text,
-  fg=normal text.fg
-}
-\setbeamercolor{subsection in toc}{
-  use=normal text,
-  fg=normal text.fg
-}
-% Add background to blocks
-\setbeamercolor*{block title}{
-  bg=normal text.bg!80!normal text.fg,
-}
-\setbeamercolor*{block body}{
-  bg=normal text.bg!90!normal text.fg,
-}
 $else$
 \definecolor{normal text.fg}{named}{black}
 \definecolor{normal text.bg}{named}{white}
